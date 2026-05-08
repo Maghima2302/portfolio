@@ -2,12 +2,15 @@
   "name": "maghima-portfolio",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://Maghima2302.github.io/portfolio",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
@@ -33,16 +36,5 @@
     "globals": "^17.5.0",
     "tailwindcss": "^4.2.4",
     "vite": "^8.0.10"
-  }
-}
-{
-  "name": "maghima-portfolio",
-  "homepage": "https://Maghima2302.github.io/portfolio",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
   }
 }
