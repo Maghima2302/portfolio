@@ -41,6 +41,8 @@ jobs:
 
       - name: Build for GitHub Pages
         run: pnpm run build:gh-pages
+        env:
+          VITE_SHEETDB_URL: ${{ secrets.VITE_SHEETDB_URL || secrets.SHEETDB_URL || 'https://sheetdb.io/api/v1/selwjxlsgvb85' }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

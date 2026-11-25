@@ -44,7 +44,9 @@ export const SOCIALS = {
   whatsapp: "https://wa.me/917418885563?text=Hi%20Maghima%2C%20I%20saw%20your%20creative%20portfolio!",
 };
 
-const SHEETDB_URL = "https://sheetdb.io/api/v1/selwjxlsgvb85";
+const SHEETDB_URL =
+  (typeof import.meta !== "undefined" && import.meta.env?.VITE_SHEETDB_URL) ||
+  "https://sheetdb.io/api/v1/selwjxlsgvb85";
 
 const nav = [
   ["Home", "home"],
