@@ -14,12 +14,11 @@ const isGhPages =
 export default defineConfig({
   base: isGhPages ? "/portfolio/" : "/",
   optimizeDeps: {
+    include: ["@tabler/icons-react", "framer-motion"],
     entries: [
       "app/entry.client.tsx",
       "app/root.tsx",
-      "app/components/layout/{Layout,Sidebar}.tsx",
-      "app/components/chat/ChatRouteContent.tsx",
-      "app/routes/{home,chat.$threadId}.tsx",
+      "app/routes/_index.tsx",
     ],
   },
   plugins: [

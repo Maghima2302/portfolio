@@ -65,14 +65,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-function DbSyncSetup() {
+function RealDbSync() {
   const qc = useQueryClient();
-  useNavigationState();
   useDbSync({
     queryClient: qc,
     ignoreSource: TAB_ID,
   });
   return null;
+}
+
+function DbSyncSetup() {
+  useNavigationState();
+  // Disable backend SSE/polling when hosted on GitHub Pages or static environment
+  if (
+    typeof window !== "undefined" &&
+    (window.location.hostname.includes("github.io") ||
+      window.location.protocol === "file:")
+  ) {
+    return null;
+  }
+  return <RealDbSync />;
 }
 
 export default function Root() {
