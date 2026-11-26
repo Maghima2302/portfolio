@@ -8,8 +8,8 @@ const agentNativePlugins = agentNative as unknown as (
 ) => any[];
 
 const isGhPages =
-  process.env.BUILD_TARGET === "gh-pages" ||
-  process.env.GITHUB_PAGES === "true";
+  process.env.BUILD_TARGET === "gh-pages" || // guard:allow-env-credential — static export target
+  process.env.GITHUB_PAGES === "true"; // guard:allow-env-credential — static export target
 
 export default defineConfig({
   base: isGhPages ? "/portfolio/" : "/",

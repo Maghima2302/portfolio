@@ -3,7 +3,9 @@ import { installRouteChunkRecovery } from "@agent-native/core/client/route-chunk
 import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
-installRouteChunkRecovery();
+if (typeof window !== "undefined" && !window.location.hostname.includes("github.io")) {
+  installRouteChunkRecovery();
+}
 
 configureClientRouterBasename();
 
