@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   IconArrowDown,
@@ -48,7 +48,7 @@ const SHEETDB_URL =
   (typeof import.meta !== "undefined" && import.meta.env?.VITE_SHEETDB_URL) ||
   "https://sheetdb.io/api/v1/selwjxlsgvb85";
 
-const nav = [
+const nav: [string, string][] = [
   ["Home", "home"],
   ["About", "about"],
   ["Skills", "skills"],
@@ -237,11 +237,34 @@ function Tags({ items }: { items: string[] }) {
 
 export default function HomeRoute() {
   const [menu, setMenu] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const [skill, setSkill] = useState("All");
   const [selected, setSelected] = useState<typeof projects[number] | null>(null);
   const [studioFilter, setStudioFilter] = useState("All");
   const [palette, setPalette] = useState("#DCCCF7");
   const [sticker, setSticker] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 15);
+      const scrollPos = window.scrollY + 110;
+      for (const [, id] of nav) {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(id);
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Contact form state
   const [formData, setFormData] = useState({
@@ -328,7 +351,7 @@ export default function HomeRoute() {
 
   return (
     <div className="portfolio">
-      <header className="site-header">
+      <header className={`site-header ${scrolled ? "scrolled" : ""}`}>
         <a href="#home" className="brand" aria-label="Maghima home">
           maghima<span>.</span>
         </a>
@@ -337,7 +360,15 @@ export default function HomeRoute() {
           aria-label="Main navigation"
         >
           {nav.map(([label, id]) => (
-            <a key={id} href={`#${id}`} onClick={() => setMenu(false)}>
+            <a
+              key={id}
+              href={`#${id}`}
+              className={activeSection === id ? "active" : ""}
+              onClick={() => {
+                setActiveSection(id);
+                setMenu(false);
+              }}
+            >
               {label}
             </a>
           ))}
@@ -360,9 +391,6 @@ export default function HomeRoute() {
         <section id="home" className="hero">
           <div className="hero-inner">
             <div className="hero-copy">
-              <div className="availability">
-                <span /> OPEN TO CREATIVE OPPORTUNITIES
-              </div>
               <div className="hero-hello">Hello there, I’m</div>
               <h1>
                 Maghima
